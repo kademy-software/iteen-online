@@ -40,20 +40,21 @@
     <div class="container d-flex align-items-center">
 
       <h1 class="logo me-auto"><a href="index.html">iTeen</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
+     
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="active" href="index.html">Home</a></li>
+         
           <li class="dropdown"><a href="#"><span>Code Playground</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="code_editor.html">HTML +CSS + JS</a></li>
-              <li><a href="code_playground.html">Python / Ngôn Ngữ Khối</a></li>
+              <li><a href="code_playground.html">Python</a></li>
+              <li><a href="code_playground_block.html">Ngôn Ngữ Khối</a></li>
+              
 
             </ul>
           </li>
-          <li class="dropdown"><a href="#"><span>iTeenVerse</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Khám Phá</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="https://kademy.wixsite.com/iteen/challenges">Danh Mục Khoá Học</a></li>
               <li><a href="https://kademy.wixsite.com/iteen/forum?feedType=all-posts">Diễn đàn</a></li>
@@ -77,7 +78,8 @@
     <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
       <h1>iTeen - học hôm nay,<br>Làm chủ ngày mai</h1>
       <h2>"Chắp cánh ước mơ, Lập trình cho tương lai!"</h2>
-      <a href="courses.html" class="btn-get-started">Tìm hiểu thêm</a>
+      <a href="#" class="btn-get-started">Tìm hiểu thêm</a>
+      <a href="https://kademy.wixsite.com/iteen/challenges" class="btn-get-started">Học ngay</a>
     </div>
   </section><!-- End Hero -->
 
@@ -156,9 +158,8 @@
         </div>
 
       </div>
-    </section><!-- End Why Us Section -->
+    </section>
 
-    <!-- ======= Features Section ======= -->
     <section id="why-us" class="why-us">
       <div class="container" data-aos="fade-up">
 
@@ -170,7 +171,7 @@
               <div class="card-body">
                 <h5 class="card-title">Quy Hoạch Động III</h5>
                 <p class="card-text">Trong lĩnh vực lập trình, quy hoạch động (dynamic programming) là một phương pháp...</p>
-                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem Bài Viết</a>
+                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem</a>
                 <p class="card-text"><small class="text-muted">Cập nhật gần nhất 5 phút trước</small></p>
               </div>
             </div>
@@ -180,8 +181,10 @@
               <div class="card-body">
                 <h5 class="card-title">Quy Hoạch Động II</h5>
                 <p class="card-text">Trong lĩnh vực lập trình, quy hoạch động (dynamic programming) là một phương pháp...</p>
-                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem Bài Viết</a>
-                <p class="card-text"><small class="text-muted">Cập nhật gần nhất 6 phút trước</small></p>
+                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem</a>
+                <p class="card-text"><small class="text-muted"><span class="material-symbols-outlined">
+                  refresh
+                  </span> 6 phút trước</small></p>
               </div>
             </div>
             <div class="card">
@@ -189,7 +192,7 @@
               <div class="card-body">
                 <h5 class="card-title">Quy Hoạch Động I</h5>
                 <p class="card-text">Trong lĩnh vực lập trình, quy hoạch động (dynamic programming) là một phương pháp...</p>
-                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem Bài Viết</a>
+                <a class="btn btn-primary" href="blog_dynamic.html" role="button">Xem</a>
                 <p class="card-text"><small class="text-muted">Cập nhật gần nhất 7 phút trước</small></p>
               </div>
             </div>
@@ -219,7 +222,7 @@
         </li>
       </ul>
       <div class="chat-input">
-        <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+        <textarea placeholder="Nhập câu hỏi..." spellcheck="false" required></textarea>
         <span id="send-btn" class="material-symbols-rounded">Gửi đi</span>
       </div>
     </div>
@@ -499,25 +502,27 @@ const chatbox = document.querySelector(".chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 
-let userMessage = null; // Variable to store user's message
-const API_KEY = "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"; // Paste your API key here
+let userMessage = null;
+//const urlParams = new URLSearchParams(window.location.search);
+//const API_KEY = urlParams.get('apiKey');
+const API_KEY = window.localStorage.getItem('apiKey')
 const inputInitHeight = chatInput.scrollHeight;
 
 const createChatLi = (message, className) => {
-    // Create a chat <li> element with passed message and className
+    
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", `${className}`);
     let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
     chatLi.innerHTML = chatContent;
     chatLi.querySelector("p").textContent = message;
-    return chatLi; // return chat <li> element
+    return chatLi; 
 }
 
 const generateResponse = (chatElement) => {
     const API_URL = "https://api.openai.com/v1/chat/completions";
     const messageElement = chatElement.querySelector("p");
 
-    // Define the properties and message for the API request
+    
     const requestOptions = {
         method: "POST",
         headers: {
@@ -530,30 +535,30 @@ const generateResponse = (chatElement) => {
         })
     }
 
-    // Send POST request to API, get response and set the reponse as paragraph text
+   
     fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
         messageElement.textContent = data.choices[0].message.content.trim();
     }).catch(() => {
         messageElement.classList.add("error");
-        messageElement.textContent = "Phiên bản online sẽ không sử dụng được bạn nhé!.";
+        messageElement.textContent = "Oops! Có lỗi xảy ra.";
     }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
 }
 
 const handleChat = () => {
-    userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
+    userMessage = chatInput.value.trim(); 
     if(!userMessage) return;
 
-    // Clear the input textarea and set its height to default
+   
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
 
-    // Append the user's message to the chatbox
+   
     chatbox.appendChild(createChatLi(userMessage, "outgoing"));
     chatbox.scrollTo(0, chatbox.scrollHeight);
     
     setTimeout(() => {
-        // Display "Thinking..." message while waiting for the response
-        const incomingChatLi = createChatLi("Thinking...", "incoming");
+       
+        const incomingChatLi = createChatLi("Đang suy nghĩ...", "incoming");
         chatbox.appendChild(incomingChatLi);
         chatbox.scrollTo(0, chatbox.scrollHeight);
         generateResponse(incomingChatLi);
